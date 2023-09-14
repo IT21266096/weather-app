@@ -20,11 +20,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // generate Rest API
-app.use('/api/users', userRouter);
+app.use('/', userRouter);
 
-app.get('/', (req, res) => {
-    res.send('Hey this is my API running 🥳')
-  })
+// app.get('/', (req, res) => {
+//     res.send('Hey this is my API running 🥳')
+//   })
 
 
 app.use((err, req, res, next) => {
