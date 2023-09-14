@@ -1,11 +1,15 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from 'dotenv';
+import cors from 'cors';
+
+const app = express();
+app.use(cors());
+dotenv.config();
 
 // import router
 import userRouter from './Routes/userRouter.js';
 
-dotenv.config();
 
 // mongodb connection
 mongoose.connect(process.env.MONGODB_URI).then(() =>{
@@ -14,25 +18,22 @@ mongoose.connect(process.env.MONGODB_URI).then(() =>{
     console.log("Error",err.message);
 }) 
 
-const app = express();
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // generate Rest API
-app.use('/', userRouter);
+app.use('./api', userRouter);
 
-// app.get('/', (req, res) => {
-//     res.send('Hey this is my API running 🥳')
-//   })
+app.get("/", (req, res) => {
+    res.send("Main page!");
+  });
+
+// app.use((err, req, res, next) => {
+//     res.status(500).send({message:err.message});
+// })
 
 
-app.use((err, req, res, next) => {
-    res.status(500).send({message:err.message});
-})
-
-
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 8000;
 app.listen(port, () => {
     console.log(`listening on port ${port}`)
 });
