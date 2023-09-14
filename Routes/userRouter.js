@@ -59,7 +59,7 @@ async function getWeather(location) {
 }
 
 // schedule send emails to users with weather updates in every 3 hours
-cron.schedule("* * * * *", async () => {
+cron.schedule("* 3 * * *", async () => {
   try {
     const users = await User.find({});
 
